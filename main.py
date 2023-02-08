@@ -123,8 +123,8 @@ async def start(client, message):
         )
 @app.on_message(filters.command('yol'))
 async def yolbilgisi(client, message):
-    city = message.text.split(' ')[1]
     try:
+        city = message.text.split(' ')[1]
         if not city.isupper():
             await app.send_message(message.chat.id, "**Lütfen şehir adının tamamını büyük harfle yazınız.** Örneğin: /yol GAZİANTEP. Mevcut il adları için /iller yazın.", parse_mode=Markdown)
         else:
