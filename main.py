@@ -61,7 +61,7 @@ BOT_TOKEN = env.get('BOT_TOKEN', None)
 
 app = Client('EarthquakeInfo', api_id=APP_ID, api_hash=APP_HASH, bot_token=BOT_TOKEN)
 
-BUTTONS = InlineKeyboardMarkup(
+START_BUTTONS = InlineKeyboardMarkup(
     [
         [
             InlineKeyboardButton('📢 Son Depremler', url='https://t.me/sondepremlerkandilli'),
@@ -69,6 +69,26 @@ BUTTONS = InlineKeyboardMarkup(
         ],
         [
             InlineKeyboardButton('📢 Güvenli Bölgeler', url='https://www.google.com/maps/d/u/0/viewer?mid=1aQ0TJi4q_46XAZiSLggkbTjPzLGkTzQ&g_ep=CAESCTExLjY0LjcwMRgAQgJUUg%3D%3D&shorturl=1&ll=37.47264354077547%2C37.85919325518651&z=7'),
+        ]
+    ]
+    )
+
+USEFUL_LINKS_BUTTONS = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton('📢 Son Depremler', url='https://t.me/sondepremlerkandilli'),
+            InlineKeyboardButton('📢 Deprem.io', url='https://t.me/deprem.io'),
+            InlineKeyboardButton('📢 Güvenli Bölgeler', url='https://www.google.com/maps/d/u/0/viewer?mid=1aQ0TJi4q_46XAZiSLggkbTjPzLGkTzQ&g_ep=CAESCTExLjY0LjcwMRgAQgJUUg%3D%3D&shorturl=1&ll=37.47264354077547%2C37.85919325518651&z=7'),
+        ],
+        [
+            InlineKeyboardButton('📌 Enkaz Dinleme Uygulaması', url='https://web.itu.edu.tr/sariero/dinleme.html?fbclid=PAAaZToiVKz15Yxc-1Vq8aMhn2ycuY3MWospPGPVtv0QrCzKFHNIJyMmrOs2c'),
+            InlineKeyboardButton('📌 Deprem Yardım', url='https://depremyardim.com/'),
+            InlineKeyboardButton('📌 Ben İyiyim', url='https://beniyiyim.com')
+        ],
+        [
+            InlineKeyboardButton('💵 Resmi Bağış Hesapları', url='https://earthquake.enessahin.dev/docs/Deprem%20Kaynaklar%20-%20Resmi%20Ba%C4%9F%C4%B1%C5%9F%20Hesaplar%C4%B1%20(Yeni).pdf'),
+            InlineKeyboardButton('💵 Yardım Toplama Merkezleri', url='https://play.google.com/store/apps/details?id=com.deprem'),
+            InlineKeyboardButton('💵 Resmi Afad Twitter Hesabı', url='https://twitter.com/AFADBaskanlik')
         ]
     ]
     )
@@ -98,8 +118,8 @@ ilAdlari = [
 @app.on_message(filters.command('start'))
 async def start(client, message):
     await message.reply_text(
-        f"Merhaba {message.from_user.first_name}!\n\nBen Yol Durumu Botuyum. Yol durumunu öğrenmek için /yol komutunu kullanabilirsin.",
-        reply_markup=BUTTONS
+        f"Merhaba {message.from_user.first_name}!\n\nBen Yol Durumu Botuyum. Yol durumunu öğrenmek için /yol (BÜYÜK HAFRLERLE Şehir adı) komutunu kullanabilirsin. Örneğin: /yol GAZİANTEP",
+        reply_markup=START_BUTTONS
         )
 @app.on_message(filters.command('yol'))
 async def yolbilgisi(client, message):
@@ -118,10 +138,16 @@ async def yolbilgisi(client, message):
                 await app.send_message(message.chat.id, road, parse_mode=Markdown, disable_web_page_preview=True)
                 time.sleep(0.75)
             await app.send_message(message.chat.id, "✅ **Arama Tamamlandı.**", parse_mode=Markdown)
+            
 @app.on_message(filters.command('iller'))
 async def iller(client, message):
     cities = "Aramaya dahil şehirler: \n\n"
     for city in ilAdlari:
         cities += f"• `{city}`\n"
     await app.send_message(message.chat.id, cities, parse_mode=Markdown)
+    
+@app.on_message(filters.command('faydalilinkler'))
+async def faydalilinkler(client, message):
+    await message.reply_text(message.chat.id, "Faydalı Linkler. Lütfen paylaşalım.", reply_markup=USEFUL_LINKS_BUTTONS),
+    
 app.run()
