@@ -124,20 +124,20 @@ async def start(client, message):
 @app.on_message(filters.command('yol'))
 async def yolbilgisi(client, message):
     city = message.text.split(' ')[1]
-    if city == None:
-        await app.send_message(message.chat.id, "**Lütfen şehir adını yazınız.** Örneğin: /yol GAZİANTEP. Mevcut il adları için /iller yazın.", parse_mode=Markdown)
-    if not city.isupper():
-        await app.send_message(message.chat.id, "**Lütfen şehir adının tamamını büyük harfle yazınız.** Örneğin: /yol GAZİANTEP. Mevcut il adları için /iller yazın.", parse_mode=Markdown)
-    else:
-        matched = await closedRoadsFilter(city, message)
-        if matched == []:
-            await app.send_message(message.chat.id, "❌ **Arama sonucu bulunamadı.**", parse_mode=Markdown)
+    try:
+        if not city.isupper():
+            await app.send_message(message.chat.id, "**Lütfen şehir adının tamamını büyük harfle yazınız.** Örneğin: /yol GAZİANTEP. Mevcut il adları için /iller yazın.", parse_mode=Markdown)
         else:
-            for road in matched:
-                await app.send_message(message.chat.id, road, parse_mode=Markdown, disable_web_page_preview=True)
-                time.sleep(0.75)
-            await app.send_message(message.chat.id, "✅ **Arama Tamamlandı.**", parse_mode=Markdown)
-            
+            matched = await closedRoadsFilter(city, message)
+            if matched == []:
+                await app.send_message(message.chat.id, "❌ **Arama sonucu bulunamadı.**", parse_mode=Markdown)
+            else:
+                for road in matched:
+                    await app.send_message(message.chat.id, road, parse_mode=Markdown, disable_web_page_preview=True)
+                    time.sleep(0.75)
+                await app.send_message(message.chat.id, "✅ **Arama Tamamlandı.**", parse_mode=Markdown)
+    except IndexError:
+        await app.send_message(message.chat.id, "**Lütfen şehir adını yazınız.** Örneğin: /yol GAZİANTEP. Mevcut il adları için /iller yazın.", parse_mode=Markdown)
 @app.on_message(filters.command('iller'))
 async def iller(client, message):
     cities = "Aramaya dahil şehirler: \n\n"
