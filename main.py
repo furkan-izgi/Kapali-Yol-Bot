@@ -148,6 +148,6 @@ async def iller(client, message):
     
 @app.on_message(filters.command('faydalilinkler'))
 async def faydalilinkler(client, message):
-    await message.reply_text(message.chat.id, "Faydalı Linkler. Lütfen paylaşalım.", reply_markup=USEFUL_LINKS_BUTTONS),
+    await app.send_message(message.chat.id, "Faydalı Linkler. Lütfen paylaşalım.", reply_markup=USEFUL_LINKS_BUTTONS),
     
 app.run()
