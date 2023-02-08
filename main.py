@@ -66,6 +66,9 @@ BUTTONS = InlineKeyboardMarkup(
         [
             InlineKeyboardButton('📢 Son Depremler', url='https://t.me/sondepremlerkandilli'),
             InlineKeyboardButton('📢 Deprem.io', url='https://t.me/deprem.io')
+        ],
+        [
+            InlineKeyboardButton('📢 Güvenli Bölgeler', url='https://www.google.com/maps/d/u/0/viewer?mid=1aQ0TJi4q_46XAZiSLggkbTjPzLGkTzQ&g_ep=CAESCTExLjY0LjcwMRgAQgJUUg%3D%3D&shorturl=1&ll=37.47264354077547%2C37.85919325518651&z=7'),
         ]
     ]
     )
