@@ -1,6 +1,6 @@
 # Kapalı Yollar Telegram Botu
 
-Bu Telegram Botu, deprem bölgedesindeki kapalı yolları göstermek için tasarlanmıştır. Kullanıcılar deprem bölgedesindeki kapalı yollarını sorgulayabilir ve güncel bilgi alabilirler.
+Bu Telegram Botu, Türkiye'deki kapalı yolları göstermek için tasarlanmıştır. Kullanıcılar Türkiye'deki 18 ile ait kapalı yollarını sorgulayabilir ve güncel bilgi alabilirler.
 # Nasıl Kullanılır
 
 /iller yazarak hangi illerde arama yapabileceğinizi görebilirsiniz.
