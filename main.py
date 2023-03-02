@@ -73,28 +73,6 @@ BOT_TOKEN = env.get('BOT_TOKEN', None)
 
 app = Client('EarthquakeInfo', api_id=APP_ID, api_hash=APP_HASH, bot_token=BOT_TOKEN)
 
-ilAdlari = [
-    'GAZİANTEP',
-    'MALATYA',
-    'BATMAN',
-    'BİNGÖL',
-    'ELAZIĞ',
-    'KİLİS',
-    'DİYARBAKIR',
-    'MARDİN',
-    'SİİRT',
-    'ŞIRNAK',
-    'VAN',
-    'MUŞ',
-    'BİTLİS',
-    'HAKKARİ',
-    'ADANA',
-    'OSMANİYE',
-    'HATAY',
-    'KAHRAMANMARAŞ'
-    ]
-
-
 @app.on_message(filters.command('start'))
 async def start(client, message):
     await message.reply_text(
@@ -124,17 +102,13 @@ async def yolbilgisi(client, message):
         
 @app.on_message(filters.command('iller'))
 async def iller(client, message):
-    cities = "Aramaya dahil şehirler: \n\n"
-    for city in ilAdlari:
-        cities += f"• `{city}`\n"
-    await app.send_message(message.chat.id, cities, parse_mode=Markdown)
+    await app.send_message(message.chat.id, "https://www.nufusu.com/iller adresi ile ülkemizdeki illeri görebilirsiniz.", parse_mode=Markdown)
     
 @app.on_message(filters.command('faydalilinkler'))
 async def faydalilinkler(client, message):
     await app.send_message(message.chat.id,
                            "Faydalı Linkler. Lütfen paylaşalım.",
                            reply_markup=buttons.USEFUL_LINKS_BUTTONS)
-    
     
 @app.on_callback_query()
 async def callback_data(client, callback_query):
@@ -145,7 +119,7 @@ async def callback_data(client, callback_query):
             await callback_query.edit_message_text("CSV Oluşturuluyor...")
             fileID = await createCSV(csvList)
             await callback_query.edit_message_text("✅ CSV Oluşturuldu.")
-            await asyncio.sleep(2)
+            #await asyncio.sleep(2)
             await client.send_document(callback_query.message.chat.id, open(f"Arama_Sonuclari_{fileID}.csv", "rb"))
             os.remove(f"./Arama_Sonuclari_{fileID}.csv")
     
